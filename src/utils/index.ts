@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 
-export function clearObject(object) {
-  const result = {};
-  Object.keys(object).forEach((key) => {
+export function clearObject(object: object) {
+  const result: object = {};
+  Object.keys(object).forEach((key: string) => {
+    //@ts-ignore
     const value = object[key];
     if (value || value === 0) {
+      // @ts-ignore
       result[key] = value;
     }
   });
   return result;
 }
 
-export function useMount(callback) {
+export function useMount(callback: () => void) {
   useEffect(() => {
     return callback();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
-export function useDebounce(value, delay = 1e3) {
+export function useDebounce(value: any, delay: number = 200) {
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
     const timer = setTimeout(() => {
