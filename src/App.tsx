@@ -5,8 +5,11 @@ import { useState } from "react";
 
 // import ProjectList from "./screens/project-list";
 import Login from "./screens/login";
+import { useAuth } from "context/auth-context";
 function App() {
   const [toggle, setToggle] = useState(true);
+  const context = useAuth();
+  console.log(context);
   return (
     <div className="App">
       <h1 onClick={() => setToggle(!toggle)}>hello </h1>

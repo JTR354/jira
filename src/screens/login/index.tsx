@@ -7,7 +7,7 @@ const Login = () => {
     const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
     login();
     function login() {
-      fetch(`${apiUrl}/login`, {
+      fetch(`${apiUrl}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,11 +21,17 @@ const Login = () => {
   };
   return (
     <form onSubmit={handlerSubmit}>
-      <label htmlFor="username">name</label>
-      <input type="text" id="username" />
-      <label htmlFor="password">password</label>
-      <input type="password" id="password" />
-      <button type="submit">submit</button>
+      <div>
+        <label htmlFor="username">name</label>
+        <input type="text" id="username" />
+      </div>
+      <div>
+        <label htmlFor="password">password</label>
+        <input type="password" id="password" />
+      </div>
+      <div>
+        <button type="submit">submit</button>
+      </div>
     </form>
   );
 };
