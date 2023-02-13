@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { User } from "screens/project-list/search-panel";
 import * as auth from "auth-provider";
+import { http } from "utils/http";
+import { useMount } from "../utils/index";
 
 export const AuthContext = React.createContext<
   | {
@@ -19,6 +21,15 @@ interface FormData {
   password: string;
 }
 
+const bootstrap = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    user = (await http("me", { token }))?.user;
+  }
+  return user;
+};
+
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
@@ -27,6 +38,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   const register = (formData: FormData) =>
     auth.register(formData).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+
+  useMount(() => {
+    bootstrap().then(setUser);
+  });
+
   return (
     <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}

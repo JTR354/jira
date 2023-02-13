@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import qs from "qs";
 import List from "./list";
 import SearchPanel from "./search-panel";
 import { clearObject, useMount, useDebounce } from "../../utils";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import { useHttp } from "utils/http";
 
 const ProjectList = () => {
   const [params, setParams] = useState({ name: "", personId: "" });
@@ -13,22 +11,27 @@ const ProjectList = () => {
 
   const debounceParams = useDebounce(params, 500);
 
+  const client = useHttp();
+
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client("users").then(setUsers);
+    // fetch(`${apiUrl}/users`).then(async (response) => {
+    //   if (response.ok) {
+    //     setUsers(await response.json());
+    //   }
+    // });
   });
 
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(clearObject(debounceParams))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    client("projects", { data: clearObject(debounceParams) }).then(setList);
+    // fetch(
+    //   `${apiUrl}/projects?${qs.stringify(clearObject(debounceParams))}`
+    // ).then(async (response) => {
+    //   if (response.ok) {
+    //     setList(await response.json());
+    //   }
+    // });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParams]);
 
   return (
