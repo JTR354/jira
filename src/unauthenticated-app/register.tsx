@@ -1,7 +1,6 @@
 import { useAuth } from "context/auth-context";
-import { SET_IS_LOGIN } from "unauthenticated-app";
 
-const Register: React.FC<SET_IS_LOGIN> = ({ setIsLogin }) => {
+const Register: React.FC<{}> = () => {
   const { register } = useAuth();
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,14 +21,6 @@ const Register: React.FC<SET_IS_LOGIN> = ({ setIsLogin }) => {
       </div>
       <div>
         <button type="submit">register</button>
-        <button
-          type="button"
-          onClick={() => {
-            setIsLogin(true);
-          }}
-        >
-          go to login
-        </button>
       </div>
     </form>
   );

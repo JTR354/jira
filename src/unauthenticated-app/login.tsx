@@ -1,7 +1,6 @@
 import { useAuth } from "../context/auth-context";
-import { SET_IS_LOGIN } from "./index";
 
-const Login: React.FC<SET_IS_LOGIN> = ({ setIsLogin }) => {
+const Login: React.FC<{}> = () => {
   const { login } = useAuth();
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,9 +21,6 @@ const Login: React.FC<SET_IS_LOGIN> = ({ setIsLogin }) => {
       </div>
       <div>
         <button type="submit">submit</button>
-        <button type="button" onClick={() => setIsLogin(false)}>
-          go to register
-        </button>
       </div>
     </form>
   );
