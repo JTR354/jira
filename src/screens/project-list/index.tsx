@@ -15,22 +15,10 @@ const ProjectList = () => {
 
   useMount(() => {
     client("users").then(setUsers);
-    // fetch(`${apiUrl}/users`).then(async (response) => {
-    //   if (response.ok) {
-    //     setUsers(await response.json());
-    //   }
-    // });
   });
 
   useEffect(() => {
     client("projects", { data: clearObject(debounceParams) }).then(setList);
-    // fetch(
-    //   `${apiUrl}/projects?${qs.stringify(clearObject(debounceParams))}`
-    // ).then(async (response) => {
-    //   if (response.ok) {
-    //     setList(await response.json());
-    //   }
-    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParams]);
 
