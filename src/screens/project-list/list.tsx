@@ -7,6 +7,7 @@ interface Project {
   personId: string;
   organization: string;
   created: string;
+  key?: unknown;
 }
 interface ListProps {
   list: Project[];
@@ -15,18 +16,21 @@ interface ListProps {
 const List = ({ list, users }: ListProps) => {
   return (
     <Table
+      title={() => <h1>项目列表</h1>}
       pagination={false}
-      dataSource={list}
+      dataSource={list.map((it) => ({ ...it, key: it.id }))}
       columns={[
         {
           title: "名称",
           dataIndex: "name",
           sorter: (a, b) => a.name.localeCompare(b.name),
+          key: "name",
         },
         {
           title: "部门",
           dataIndex: "organization",
           sorter: (a, b) => a.organization.localeCompare(b.organization),
+          key: "organization",
         },
         {
           title: "负责人",
@@ -35,6 +39,7 @@ const List = ({ list, users }: ListProps) => {
           render(value, record, index) {
             return users.find((it) => it.id === value)?.name;
           },
+          key: "personId",
         },
         {
           title: "创建时间",
@@ -43,6 +48,7 @@ const List = ({ list, users }: ListProps) => {
           render(value) {
             return value ? dayjs(value).format("YYYY-MM-DD") : "未知";
           },
+          key: "created",
         },
       ]}
     />

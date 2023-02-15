@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
-export function clearObject(object: object) {
-  const result: object = {};
+type EmptyObject = { [key: string]: unknown };
+export function clearObject(object: EmptyObject) {
+  const result: EmptyObject = {};
   Object.keys(object).forEach((key: string) => {
-    //@ts-ignore
     const value = object[key];
     if (value || value === 0) {
-      // @ts-ignore
       result[key] = value;
     }
   });
