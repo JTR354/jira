@@ -1,8 +1,10 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Typography } from "antd";
 import { useAuth } from "context/auth-context";
+import { useAsync } from "utils/use-async";
 
 const Register: React.FC<{}> = () => {
   const { register } = useAuth();
+  const { run, error, isLoading } = useAsync();
   const handlerSubmit = ({
     username,
     password,
@@ -10,11 +12,14 @@ const Register: React.FC<{}> = () => {
     username: string;
     password: string;
   }) => {
-    register({ username, password });
+    run(register({ username, password }));
   };
 
   return (
     <Form onFinish={handlerSubmit}>
+      {error && (
+        <Typography.Text type="danger">{error.message}</Typography.Text>
+      )}
       <Form.Item
         name={"username"}
         rules={[{ required: true, message: "pls input username" }]}
@@ -51,7 +56,7 @@ const Register: React.FC<{}> = () => {
         <Input.Password placeholder="confirm password" />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" type="primary" block>
+        <Button htmlType="submit" type="primary" block loading={isLoading}>
           register
         </Button>
       </Form.Item>
