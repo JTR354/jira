@@ -1,32 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import List from "./list";
 import SearchPanel from "./search-panel";
-import { clearObject, useMount, useDebounce } from "../../utils";
-import { useHttp } from "utils/http";
+import { useDebounce } from "../../utils";
 import styled from "@emotion/styled";
+import { Typography } from "antd";
+import { useProjects } from "./hooks/projects";
+import { useUsers } from "./hooks/users";
 
 const ProjectList = () => {
   const [params, setParams] = useState({ name: "", personId: "" });
-  const [users, setUsers] = useState([]);
-  const [list, setList] = useState([]);
 
-  const debounceParams = useDebounce(params, 500);
+  const {
+    data: list,
+    error,
+    isLoading,
+  } = useProjects(useDebounce(params, 500));
 
-  const client = useHttp();
-
-  useMount(() => {
-    client("users").then(setUsers);
-  });
-
-  useEffect(() => {
-    client("projects", { data: clearObject(debounceParams) }).then(setList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceParams]);
+  const { data: users } = useUsers();
 
   return (
     <Container>
       <Search params={params} setParams={setParams} users={users} />
-      <List list={list} users={users} />
+      {error && (
+        <Typography.Text type="danger">{error.message}</Typography.Text>
+      )}
+      <List dataSource={list} users={users} loading={isLoading} />
     </Container>
   );
 };

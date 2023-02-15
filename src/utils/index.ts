@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 type EmptyObject = { [key: string]: unknown };
-export function clearObject(object: EmptyObject) {
+export function clearObject(object?: EmptyObject) {
+  if (!object) return {};
   const result: EmptyObject = {};
   Object.keys(object).forEach((key: string) => {
     const value = object[key];
