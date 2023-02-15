@@ -16,8 +16,8 @@ const root = ReactDOM.createRoot(
 loadServer(() => {
   root.render(
     <React.StrictMode>
+      <DevTools />
       <AppProviders>
-        <DevTools />
         <App />
       </AppProviders>
     </React.StrictMode>
