@@ -3,6 +3,7 @@ import List from "./list";
 import SearchPanel from "./search-panel";
 import { clearObject, useMount, useDebounce } from "../../utils";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
 const ProjectList = () => {
   const [params, setParams] = useState({ name: "", personId: "" });
@@ -23,11 +24,19 @@ const ProjectList = () => {
   }, [debounceParams]);
 
   return (
-    <>
-      <SearchPanel params={params} setParams={setParams} users={users} />
+    <Container>
+      <Search params={params} setParams={setParams} users={users} />
       <List list={list} users={users} />
-    </>
+    </Container>
   );
 };
 
 export default ProjectList;
+
+const Container = styled.section`
+  padding: 2rem;
+`;
+
+const Search = styled(SearchPanel)`
+  margin-bottom: 2rem;
+`;
