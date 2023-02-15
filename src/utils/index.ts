@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type EmptyObject = { [key: string]: unknown };
 export function clearObject(object?: EmptyObject) {
@@ -31,3 +31,19 @@ export function useDebounce<V>(value: V, delay: number = 200) {
 
   return debounceValue;
 }
+
+export const useDocumentTitle = (title: string, resize: boolean = true) => {
+  const oldTitle = useRef(document.title).current;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (resize) {
+        document.title = oldTitle;
+      }
+    };
+  }, [resize, oldTitle]);
+};

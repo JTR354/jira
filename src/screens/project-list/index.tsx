@@ -1,11 +1,11 @@
 import { useState } from "react";
 import List from "./list";
 import SearchPanel from "./search-panel";
-import { useDebounce } from "../../utils";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "./hooks/projects";
 import { useUsers } from "./hooks/users";
+import { useDebounce, useDocumentTitle } from "utils";
 
 const ProjectList = () => {
   const [params, setParams] = useState({ name: "", personId: "" });
@@ -17,6 +17,8 @@ const ProjectList = () => {
   } = useProjects(useDebounce(params, 500));
 
   const { data: users } = useUsers();
+
+  useDocumentTitle("项目列表");
 
   return (
     <Container>
