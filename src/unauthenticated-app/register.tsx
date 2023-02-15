@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Form, Input, Button } from "antd";
 import { useAuth } from "context/auth-context";
 
 const Register: React.FC<{}> = () => {
@@ -12,26 +12,23 @@ const Register: React.FC<{}> = () => {
   }) => {
     register({ username, password });
   };
+
   return (
     <Form onFinish={handlerSubmit}>
-      <h1>Register</h1>
       <Form.Item
         name={"username"}
-        label="username"
         rules={[{ required: true, message: "pls input username" }]}
       >
-        <Input type="text" id="username" />
+        <Input type="text" id="username" placeholder="username" />
       </Form.Item>
       <Form.Item
         name={"password"}
-        label="password"
         rules={[{ required: true, message: "pls input password" }]}
       >
-        <Input.Password />
+        <Input.Password placeholder="password" />
       </Form.Item>
       <Form.Item
         name={"password2"}
-        label="confirm password"
         dependencies={["password"]}
         rules={[
           {
@@ -51,10 +48,10 @@ const Register: React.FC<{}> = () => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder="confirm password" />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" type="primary">
+        <Button htmlType="submit" type="primary" block>
           register
         </Button>
       </Form.Item>

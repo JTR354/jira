@@ -14,23 +14,20 @@ const Login: React.FC<{}> = () => {
   };
   return (
     <Form onFinish={handlerSubmit}>
-      <h1>Login</h1>
       <Form.Item
         name={"username"}
-        label="username"
         rules={[{ required: true, message: "pls input username" }]}
       >
-        <Input type="text" id="username" />
+        <Input type="text" id="username" placeholder="username" />
       </Form.Item>
       <Form.Item
         name={"password"}
-        label="password"
         rules={[{ required: true, message: "pls input password" }]}
       >
-        <Input.Password />
+        <Input.Password placeholder="password" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" block>
           submit
         </Button>
       </Form.Item>

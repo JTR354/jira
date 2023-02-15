@@ -1,4 +1,4 @@
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider } from "antd";
 import { AuthProvider } from "./auth-context";
 
 export const AppProviders: React.FC<React.PropsWithChildren> = ({
