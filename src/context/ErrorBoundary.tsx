@@ -17,6 +17,7 @@ export default class ErrorBoundary extends React.Component<
     }
   }
   render() {
+    // 为啥捕捉不到 throw new Error?
     const { children, fallback } = this.props;
     const { error } = this.state;
     if (error && fallback) {
