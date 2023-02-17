@@ -1,5 +1,6 @@
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 import { User } from "./search-panel";
 export interface Project {
   id: number;
@@ -24,6 +25,9 @@ const List = ({ users = [], dataSource = [], ...props }: ListProps) => {
           dataIndex: "name",
           sorter: (a, b) => a.name.localeCompare(b.name),
           key: "name",
+          render(value, record, index) {
+            return <Link to={String(record.id) + "/kanban"}>{value}</Link>;
+          },
         },
         {
           title: "部门",

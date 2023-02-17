@@ -1,46 +1,68 @@
 import { Button, Dropdown } from "antd";
-import ProjectList from "screens/project-list";
+import ProjectListScreen from "screens/project-list";
+import ProjectScreen from "screens/project";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 // import { Col, Row } from "./components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
+import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom";
+
 const AuthenticatedApp = () => {
-  const { logout, user } = useAuth();
   return (
     <Container>
-      <Header>
-        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-        <div>项目</div>
-        <div style={{ marginRight: "auto" }}>用户</div>
-        <Dropdown
-          menu={{
-            items: [
-              {
-                label: (
-                  <Button type="link" onClick={logout}>
-                    logout
-                  </Button>
-                ),
-                key: "logout",
-              },
-            ],
-          }}
-          trigger={["click"]}
-        >
-          <Button type="link">Hi,{user?.name}</Button>
-        </Dropdown>
-      </Header>
-      {/* <Nav>nav</Nav> */}
+      <PageHeader />
       <Main>
-        <ProjectList />
+        {/* <ProjectListScreen /> */}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/projects" element={<ProjectListScreen />}></Route>
+            <Route path=":projectId/*" element={<ProjectScreen />}></Route>
+          </Routes>
+          {!window.location.href.includes("projects") && (
+            <Navigate to="/projects" />
+          )}
+        </BrowserRouter>
       </Main>
-      {/* <Aside>aside</Aside> */}
-      {/* <Footer>footer</Footer> */}
     </Container>
   );
 };
 
 export default AuthenticatedApp;
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header>
+      <Button
+        type="link"
+        onClick={() => {
+          window.location.href = "/";
+        }}
+      >
+        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+      </Button>
+      <div>项目</div>
+      <div style={{ marginRight: "auto" }}>用户</div>
+      <Dropdown
+        menu={{
+          items: [
+            {
+              label: (
+                <Button type="link" onClick={logout}>
+                  logout
+                </Button>
+              ),
+              key: "logout",
+            },
+          ],
+        }}
+        trigger={["click"]}
+      >
+        <Button type="link">Hi,{user?.name}</Button>
+      </Dropdown>
+    </Header>
+  );
+};
 
 const Container = styled.div`
   height: 100vh;
